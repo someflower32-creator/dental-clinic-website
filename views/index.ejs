@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+    <section class="hero">
+        <h2>Добро пожаловать в Дент Арт!</h2>
+        <p>Современная стоматология для всей семьи. Забота о вашей улыбке — наша работа.</p>
+        <a href="/services" class="btn">Наши услуги</a>
+    </section>
+    <section class="features">
+        <h2>Почему выбирают нас?</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>Опытные врачи</h3>
+                <p>Врачи с многолетним стажем и регулярным повышением квалификации.</p>
+            </div>
+            <div class="feature">
+                <h3>Современное оборудование</h3>
+                <p>Мы используем только новейшие технологии и материалы.</p>
+            </div>
+            <div class="feature">
+                <h3>Комфорт и безопасность</h3>
+                <p>Безболезненное лечение и стерильность инструментов.</p>
+            </div>
+        </div>
+    </section>
+    <% if (success) { %>
+        <div class="success-message">Спасибо! Ваша заявка принята.</div>
+    <% } %>
+<%- include('partials/footer') %>

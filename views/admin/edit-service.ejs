@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+    <section class="admin">
+        <h2><%= service ? 'Редактировать услугу' : 'Добавить услугу' %></h2>
+        <form action="/admin/services<%= service ? '/' + service.id : '' %>" method="POST">
+            <div class="form-group">
+                <label for="name">Название *</label>
+                <input type="text" id="name" name="name" value="<%= service ? service.name : '' %>" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Описание</label>
+                <textarea id="description" name="description"><%= service ? service.description : '' %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price">Цена *</label>
+                <input type="number" step="0.01" id="price" name="price" value="<%= service ? service.price : '' %>" required>
+            </div>
+            <button type="submit" class="btn">Сохранить</button>
+            <a href="/admin/services" class="btn">Отмена</a>
+        </form>
+    </section>
+<%- include('../partials/footer') %>

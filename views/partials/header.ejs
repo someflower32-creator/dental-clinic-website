@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Дент Арт - <%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Дент Арт</h1>
+            <p>Стоматологическая клиника</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about">О клинике</a></li>
+                <li><a href="/services">Услуги</a></li>
+                <li><a href="/team">Наша команда</a></li>
+                <li><a href="/contact">Контакты</a></li>
+                <% if (user) { %>
+                    <% if (user.role === 'patient') { %>
+                        <li><a href="/patient/dashboard">Мои записи</a></li>
+                        <li><a href="/patient/new-appointment">Записаться</a></li>
+                    <% } else if (user.role === 'doctor') { %>
+                        <li><a href="/doctor/dashboard">Расписание</a></li>
+                    <% } else if (user.role === 'admin') { %>
+                        <li><a href="/admin/appointments">Все записи</a></li>
+                        <li><a href="/admin/users">Пользователи</a></li>
+                        <li><a href="/admin/services">Услуги</a></li>
+                    <% } %>
+                    <li><a href="/auth/logout">Выйти (<%= user.email %>)</a></li>
+                <% } else { %>
+                    <li><a href="/auth/login">Вход</a></li>
+                    <li><a href="/auth/register">Регистрация</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+

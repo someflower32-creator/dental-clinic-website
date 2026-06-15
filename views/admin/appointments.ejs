@@ -1,0 +1,100 @@
+<%- include('../partials/header') %>
+<section class="admin">
+    <h2>📋 Все заявки на приём</h2>
+    <% if (appointments && appointments.length) { %>
+        <div class="table-responsive">
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Пациент</th>
+                        <th>Врач</th>
+                        <th>Услуга</th>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Статус</th>
+                        <th>Кто изменил</th>
+                        <th>Переназначить</th>
+                        <th>Изменить статус</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% appointments.forEach(a => { %>
+                        <tr class="appointment-row status-<%= a.status %>">
+                            <td><%= a.id %></td>
+                            <td data-label="Пациент"><%= a.patient_name %><br><small><%= a.phone || '' %></small></td>
+                            <td data-label="Врач"><%= a.doctor_name %></td>
+                            <td data-label="Услуга"><%= a.service_name || '—' %></td>
+                            <td data-label="Дата"><%= a.appointment_date %></td>
+                            <td data-label="Время"><%= a.appointment_time %></td>
+                            <td data-label="Статус">
+                                <span class="status-badge status-<%= a.status %>">
+                                    <% if (a.status === 'pending') { %>⏳ Ожидает
+                                    <% } else if (a.status === 'confirmed') { %>✅ Подтверждён
+                                    <% } else if (a.status === 'completed') { %>✔️ Завершён
+                                    <% } else { %>❌ Отменён<% } %>
+                                </span>
+                            </td>
+                            <td data-label="Кто изменил">
+                                <% if (a.status_changed_by) { %>
+                                    <%= a.status_changed_by %><br>
+                                    <small><%= new Date(a.status_changed_at).toLocaleString() %></small>
+                                <% } else { %>
+                                    —
+                                <% } %>
+                            </td>
+                            <td data-label="Переназначить">
+                                <% if (a.status !== 'cancelled') { %>
+                                    <form action="/admin/appointments/<%= a.id %>/reassign" method="POST">
+                                        <select name="new_doctor_id" required>
+                                            <option value="">Сменить врача</option>
+                                            <% if (doctors) { %>
+                                                <% doctors.forEach(d => { %>
+                                                    <option value="<%= d.id %>"><%= d.full_name %></option>
+                                                <% }) %>
+                                            <% } %>
+                                        </select>
+                                        <button type="submit" class="btn-small">⟳ Переназначить</button>
+                                    </form>
+                                <% } else { %>
+                                    —
+                                <% } %>
+                            </td>
+                            <td data-label="Изменить статус">
+                                <% if (a.status !== 'cancelled') { %>
+                                    <form action="/admin/appointments/<%= a.id %>/status" method="POST">
+                                        <select name="status">
+                                            <option value="pending" <%= a.status === 'pending' ? 'selected' : '' %>>⏳ Ожидает</option>
+                                            <option value="confirmed" <%= a.status === 'confirmed' ? 'selected' : '' %>>✅ Подтверждён</option>
+                                            <option value="completed" <%= a.status === 'completed' ? 'selected' : '' %>>✔️ Завершён</option>
+                                            <option value="cancelled" <%= a.status === 'cancelled' ? 'selected' : '' %>>❌ Отменён</option>
+                                        </select>
+                                        <button type="submit" class="btn-small">💾 Изменить</button>
+                                    </form>
+                                <% } else { %>
+                                    —
+                                <% } %>
+                            </td>
+                            <td data-label="Удалить">
+                                <form action="/admin/appointments/<%= a.id %>/delete" method="POST" onsubmit="return confirm('Удалить запись навсегда? Это действие необратимо.');">
+                                    <button type="submit" class="btn-small btn-danger">🗑️ Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <p>Нет записей.</p>
+    <% } %>
+</section>
+<%- include('../partials/footer') %>
+
+
+
+
+
+
+

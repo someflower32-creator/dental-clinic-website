@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+<section class="team">
+    <h2>Наша команда врачей</h2>
+    <div class="team-grid">
+        <% if (doctors && doctors.length) { %>
+            <% doctors.forEach(doc => { %>
+                <div class="team-card">
+                    <div class="team-photo">
+                        <% if (doc.photo) { %>
+                            <img src="<%= doc.photo %>" alt="<%= doc.full_name %>">
+                        <% } else { %>
+                            <div class="no-photo">📷</div>
+                        <% } %>
+                    </div>
+                    <h3><%= doc.full_name %></h3>
+                    <p class="specialization"><%= doc.specialization || 'Стоматолог' %></p>
+                    <p class="bio"><%= doc.bio || 'Нет описания' %></p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>Скоро здесь появится информация о наших врачах.</p>
+        <% } %>
+    </div>
+</section>
+<%- include('partials/footer') %>

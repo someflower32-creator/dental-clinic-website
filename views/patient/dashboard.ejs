@@ -1,0 +1,61 @@
+<%- include('../partials/header') %>
+
+<section class="patient-dashboard">
+    <h2>📅 Мои записи на приём</h2>
+    <% if (appointments && appointments.length) { %>
+        <div class="table-responsive">
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Врач</th>
+                        <th>Услуга</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% appointments.forEach(a => { %>
+                        <tr class="appointment-row status-<%= a.status %>">
+                            <td data-label="Дата"><%= new Date(a.appointment_date).toLocaleDateString('ru-RU') %></td>
+                            <td data-label="Время"><%= a.appointment_time %></td>
+                            <td data-label="Врач">
+                                <strong><%= a.doctor_name %></strong><br>
+                                <span class="doctor-specialization"><%= a.specialization || 'стоматолог' %></span>
+                            </td>
+                            <td data-label="Услуга"><%= a.service_name || '—' %></td>
+                            <td data-label="Статус">
+                                <span class="status-badge status-<%= a.status %>">
+                                    <% if (a.status === 'pending') { %>⏳ Ожидает
+                                    <% } else if (a.status === 'confirmed') { %>✅ Подтверждён
+                                    <% } else if (a.status === 'completed') { %>✔️ Завершён
+                                    <% } else if (a.status === 'cancelled') { %>❌ Отменён
+                                    <% } %>
+                                </span>
+                            </td>
+                            <td data-label="Действие">
+                                <% if (a.status === 'pending' || a.status === 'confirmed') { %>
+                                    <form action="/patient/appointments/<%= a.id %>/cancel" method="POST" class="cancel-form">
+                                        <button type="submit" class="btn-cancel" onclick="return confirm('Точно отменить запись?')">Отменить</button>
+                                    </form>
+                                <% } else { %>
+                                    <span class="no-action">—</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <p>😕 У вас пока нет записей.</p>
+            <a href="/patient/new-appointment" class="btn">➕ Записаться</a>
+        </div>
+    <% } %>
+</section>
+
+<%- include('../partials/footer') %>
+
+

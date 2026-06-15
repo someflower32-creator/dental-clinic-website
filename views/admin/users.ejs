@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+<section class="admin">
+    <h2>Пользователи системы</h2>
+    <a href="/admin/users/new-doctor" class="btn">➕ Добавить врача</a>
+    <div class="table-responsive">
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Роль</th>
+                    <th>Специализация</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(u => { %>
+                    <tr>
+                        <td><%= u.id %></td>
+                        <td><%= u.email %></td>
+                        <td><%= u.full_name %></td>
+                        <td><%= u.phone || '—' %></td>
+                        <td><%= u.role %></td>
+                        <td><%= u.specialization || '—' %></td>
+                        <td>
+                            <% if (u.role === 'doctor') { %>
+                                <a href="/admin/users/<%= u.id %>/edit-doctor" class="btn-small">✏️ Редактировать</a>
+                            <% } %>
+                            <% if (u.role !== 'admin') { %>
+                                <form action="/admin/users/<%= u.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Удалить пользователя?');">
+                                    <button type="submit" class="btn-small btn-danger">🗑️ Удалить</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<%- include('../partials/footer') %>

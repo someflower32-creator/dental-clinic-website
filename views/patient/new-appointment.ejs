@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+<h2>Новая запись на приём</h2>
+<form method="POST" action="/patient/appointments">
+    <div class="form-group">
+        <label>Врач *</label>
+        <select name="doctor_id" required>
+            <option value="">-- выберите --</option>
+            <% doctors.forEach(doc => { %>
+                <option value="<%= doc.id %>"><%= doc.full_name %> (<%= doc.specialization || 'стоматолог' %>)</option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Услуга (необязательно)</label>
+        <select name="service_id">
+            <option value="">-- не выбрана --</option>
+            <% services.forEach(s => { %>
+                <option value="<%= s.id %>"><%= s.name %> - <%= s.price %> ₽</option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Дата *</label>
+        <input type="date" name="appointment_date" required min="<%= new Date().toISOString().slice(0,10) %>">
+    </div>
+    <div class="form-group">
+        <label>Время *</label>
+        <input type="time" name="appointment_time" required step="1800" min="09:00" max="17:30">
+    </div>
+    <button type="submit" class="btn">Записаться</button>
+</form>
+<%- include('../partials/footer') %>
+
+

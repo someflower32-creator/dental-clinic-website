@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<section class="admin">
+    <h2>Редактировать врача: <%= doctor.full_name %></h2>
+    <form action="/admin/users/<%= doctor.id %>/edit-doctor" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>ФИО</label>
+            <input type="text" name="full_name" value="<%= doctor.full_name %>" required>
+        </div>
+        <div class="form-group">
+            <label>Специализация</label>
+            <input type="text" name="specialization" value="<%= doctor.specialization || '' %>">
+        </div>
+        <div class="form-group">
+            <label>Описание (образование, опыт, достижения)</label>
+            <textarea name="bio" rows="5"><%= doctor.bio || '' %></textarea>
+        </div>
+        <div class="form-group">
+            <label>Фото</label>
+            <% if (doctor.photo) { %>
+                <div><img src="<%= doctor.photo %>" alt="Фото" style="max-width: 150px; border-radius: 50%;"></div>
+            <% } %>
+            <input type="file" name="photo" accept="image/*">
+            <input type="hidden" name="current_photo" value="<%= doctor.photo || '' %>">
+            <small>Оставьте пустым, чтобы не менять. Максимум 2 МБ.</small>
+        </div>
+        <button type="submit" class="btn">Сохранить</button>
+        <a href="/admin/users" class="btn">Отмена</a>
+    </form>
+</section>
+<%- include('../partials/footer') %>

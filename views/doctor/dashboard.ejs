@@ -1,0 +1,81 @@
+<%- include('../partials/header') %>
+<section class="doctor-dashboard">
+    <h2>📅 Моё расписание</h2>
+    <form method="GET" action="/doctor/dashboard" class="date-filter">
+        <label>Фильтр по дате: <input type="date" name="date" value="<%= currentDate !== 'все' ? currentDate : '' %>"></label>
+        <button type="submit" class="btn">Показать</button>
+        <a href="/doctor/dashboard" class="btn">Сбросить (все записи)</a>
+    </form>
+
+    <% if (appointments && appointments.length) { %>
+        <div class="table-responsive">
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Пациент</th>
+                        <th>Телефон</th>
+                        <th>Услуга</th>
+                        <th>Статус</th>
+                        <th>Кто изменил</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% appointments.forEach(a => { %>
+                        <tr class="appointment-row status-<%= a.status %>">
+                            <td data-label="Дата"><%= a.appointment_date %></td>
+                            <td data-label="Время"><%= a.appointment_time %></td>
+                            <td data-label="Пациент"><%= a.patient_name %></td>
+                            <td data-label="Телефон"><%= a.phone %></td>
+                            <td data-label="Услуга"><%= a.service_name || '—' %></td>
+                            <td data-label="Статус">
+                                <span class="status-badge status-<%= a.status %>">
+                                    <% if (a.status === 'pending') { %>⏳ Ожидает
+                                    <% } else if (a.status === 'confirmed') { %>✅ Подтверждён
+                                    <% } else if (a.status === 'completed') { %>✔️ Завершён
+                                    <% } else { %>❌ Отменён<% } %>
+                                </span>
+                            </td>
+                            <td data-label="Кто изменил">
+                                <% if (a.status_changed_by) { %>
+                                    <%= a.status_changed_by %><br>
+                                    <small><%= new Date(a.status_changed_at).toLocaleString() %></small>
+                                <% } else { %>
+                                    —
+                                <% } %>
+                            </td>
+                            <td data-label="Действие">
+                                <% if (a.status !== 'cancelled') { %>
+                                    <form action="/doctor/appointments/<%= a.id %>/status" method="POST">
+                                        <select name="status">
+                                            <option value="pending" <%= a.status === 'pending' ? 'selected' : '' %>>⏳ Ожидает</option>
+                                            <option value="confirmed" <%= a.status === 'confirmed' ? 'selected' : '' %>>✅ Подтверждён</option>
+                                            <option value="completed" <%= a.status === 'completed' ? 'selected' : '' %>>✔️ Завершён</option>
+                                            <option value="cancelled" <%= a.status === 'cancelled' ? 'selected' : '' %>>❌ Отменён</option>
+                                        </select>
+                                        <button type="submit" class="btn-small">Изменить</button>
+                                    </form>
+                                <% } else { %>
+                                    <span class="no-action">—</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <p>😕 У вас нет записей.</p>
+        </div>
+    <% } %>
+</section>
+<%- include('../partials/footer') %>
+
+
+
+
+
+

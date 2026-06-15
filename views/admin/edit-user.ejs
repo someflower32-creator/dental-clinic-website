@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<section class="admin">
+    <h2>Добавить врача</h2>
+    <form action="/admin/users/doctor" method="POST">
+        <div class="form-group">
+            <label>Email *</label>
+            <input type="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label>Полное имя *</label>
+            <input type="text" name="full_name" required>
+        </div>
+        <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" name="phone">
+        </div>
+        <div class="form-group">
+            <label>Специализация (например: хирург, терапевт, ортодонт)</label>
+            <input type="text" name="specialization">
+        </div>
+        <div class="form-group">
+            <label>Пароль *</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Создать врача</button>
+        <a href="/admin/users" class="btn">Отмена</a>
+    </form>
+</section>
+<%- include('../partials/footer') %>

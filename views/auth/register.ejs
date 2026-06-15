@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<div class="form-container">
+    <h2>Регистрация пациента</h2>
+    <% if (error) { %>
+        <div class="error-message"><%= error %></div>
+    <% } %>
+    <form action="/auth/register" method="POST">
+        <div class="form-group">
+            <label>Email *</label>
+            <input type="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label>Пароль *</label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label>Полное имя *</label>
+            <input type="text" name="full_name" required>
+        </div>
+        <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" name="phone">
+        </div>
+        <button type="submit" class="btn">Зарегистрироваться</button>
+    </form>
+    <p>Уже есть аккаунт? <a href="/auth/login">Войти</a></p>
+</div>
+<%- include('../partials/footer') %>
+

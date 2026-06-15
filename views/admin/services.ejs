@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+    <section class="admin">
+        <h2>Управление услугами</h2>
+        <a href="/admin/services/new" class="btn">Добавить услугу</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Цена</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% services.forEach(s => { %>
+                <tr>
+                    <td><%= s.id %></td>
+                    <td><%= s.name %></td>
+                    <td><%= s.description || '' %></td>
+                    <td><%= s.price %> ₽</td>
+                    <td>
+                        <a href="/admin/services/<%= s.id %>/edit">Редактировать</a>
+                        <form action="/admin/services/<%= s.id %>/delete" method="POST" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Удалить?')">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </section>
+<%- include('../partials/footer') %>
+

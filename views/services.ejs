@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<section class="services">
+    <h2>Наши услуги и цены</h2>
+    <div class="services-grid">
+        <% if (services && services.length) { %>
+            <% services.forEach(service => { %>
+                <div class="service-card">
+                    <h3><%= service.name %></h3>
+                    <p><%= service.description || 'Описание отсутствует' %></p>
+                    <p class="price"><%= service.price %> ₽</p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>Услуги временно не доступны. Пожалуйста, зайдите позже.</p>
+        <% } %>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
