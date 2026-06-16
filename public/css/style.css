@@ -529,4 +529,29 @@ img {
         grid-template-columns: 1fr;
     }
 }
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 10px 0;
+}
 
+.table-responsive table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* чтобы таблица не сжималась, а появлялась прокрутка */
+}
+
+.table-responsive th,
+.table-responsive td {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* предотвращает перенос текста, если нужно */
+}
+
+/* Для кнопок в таблице, чтобы они не разъезжались */
+.table-responsive .btn-small {
+    display: inline-block;
+    margin: 2px 0;
+    padding: 4px 8px;
+    font-size: 12px;
+}
