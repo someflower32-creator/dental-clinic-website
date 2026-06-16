@@ -1,8 +1,20 @@
 <%- include('../partials/header') %>
-    <section class="admin">
-        <h2>Управление услугами</h2>
-        <a href="/admin/services/new" class="btn">Добавить услугу</a>
-        <table>
+
+<section class="admin">
+    <h2>Управление услугами</h2>
+    <a href="/admin/services/new" class="btn">➕ Добавить услугу</a>
+
+    <div class="table-responsive">
+        <table class="services-table">
+            <!-- Фиксируем ширину колонок, чтобы таблица не разваливалась -->
+            <colgroup>
+                <col style="width: 8%;">   <!-- ID -->
+                <col style="width: 22%;">  <!-- Название -->
+                <col style="width: 30%;">  <!-- Описание -->
+                <col style="width: 15%;">  <!-- Цена -->
+                <col style="width: 25%;">  <!-- Действия -->
+            </colgroup>
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -12,23 +24,35 @@
                     <th>Действия</th>
                 </tr>
             </thead>
+
             <tbody>
-                <% services.forEach(s => { %>
-                <tr>
-                    <td><%= s.id %></td>
-                    <td><%= s.name %></td>
-                    <td><%= s.description || '' %></td>
-                    <td><%= s.price %> ₽</td>
-                    <td>
-                        <a href="/admin/services/<%= s.id %>/edit">Редактировать</a>
-                        <form action="/admin/services/<%= s.id %>/delete" method="POST" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Удалить?')">Удалить</button>
-                        </form>
-                    </td>
-                </tr>
-                <% }) %>
+                <% if (services && services.length) { %>
+                    <% services.forEach(s => { %>
+                        <tr>
+                            <td><%= s.id %></td>
+                            <td><%= s.name %></td>
+                            <td><%= s.description || '—' %></td>
+                            <td><%= s.price %> ₽</td>
+                            <td class="actions">
+                                <a href="/admin/services/<%= s.id %>/edit" class="btn-small">✏️ Редактировать</a>
+                                <form action="/admin/services/<%= s.id %>/delete" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn-small btn-danger" onclick="return confirm('Удалить услугу навсегда?')">🗑️ Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5" style="text-align:center; padding:20px; color:#888;">
+                            Нет добавленных услуг
+                        </td>
+                    </tr>
+                <% } %>
             </tbody>
         </table>
-    </section>
+    </div>
+</section>
+
 <%- include('../partials/footer') %>
+
 
