@@ -529,4 +529,42 @@ img {
         grid-template-columns: 1fr;
     }
 }
+/* Контейнер таблицы */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1rem 0;
+}
+
+/* Таблица услуг */
+.services-table {
+  width: 100%;
+  min-width: 600px; /* или 100%, но тогда колонки сжимаются */
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.services-table th,
+.services-table td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap; /* чтобы текст не переносился, если нужно – убрать */
+}
+
+/* Для мобильных – можно разрешить перенос */
+@media (max-width: 768px) {
+  .services-table td,
+  .services-table th {
+    white-space: normal;
+    word-break: break-word;
+  }
+}
+
+/* Действия – кнопки компактно */
+.services-table .actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
 
