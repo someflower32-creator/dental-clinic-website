@@ -628,3 +628,18 @@ img {
         word-break: break-word;
     }
 }
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1; /* Забирает всё свободное пространство */
+}
