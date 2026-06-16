@@ -643,3 +643,11 @@ body {
 main {
     flex: 1; /* Забирает всё свободное пространство */
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.wrapper main {
+    flex: 1;
+}
